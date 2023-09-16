@@ -1,23 +1,20 @@
 import { Slide } from '../slide/slide'
-import { useEffect, useState } from 'react'
-import { getCats } from '../../api'
+import { useEffect } from 'react'
 import { Slider } from '../slider/slider'
+import { $catsData, fetchCatData } from '../../effector'
+import { useList, useStore } from 'effector-react';
 
 
 export function CatPosts() {
-  const [catData, setCatData] = useState([])
-  const catDataLenght = catData.length;
-
-  const getCatsData = async () => {
-    const data = await getCats()
-    setCatData(data)
-  }
+  const storeCatsData = useStore($catsData)
+  const catDataLenght = storeCatsData.length;
 
   useEffect(() => {
-    getCatsData()
+    fetchCatData()
   }, [])
 
-  const slides = catData.map((item, index) => <Slide key={item.id} img={item.url} index={index} />)
+
+  const slides = useList($catsData, (item, index) => <Slide key={item.id} img={item.url} index={index} />)
 
   return (
     <Slider slidersLenght={catDataLenght}>
