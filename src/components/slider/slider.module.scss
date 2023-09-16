@@ -1,0 +1,70 @@
+@import '../../styles/vars.scss';
+@import '../../styles/mixins.scss';
+
+.wr {
+  margin: 0 auto;
+
+}
+
+.slider {
+  padding: 1.25rem 0;
+  padding: 0 1.875rem;
+  position: relative;
+  touch-action: pan-y;
+}
+
+.slider__wr {
+  width: 70vw;
+  overflow: hidden;
+}
+
+.slider__track {
+  display: flex;
+  align-items: center;
+  transition: transform $as*0.5 $ae;
+}
+
+.navigations {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navigation {
+  padding: .625rem;
+  border: 1px solid $purple;
+  border-radius: 1.625rem;
+  display: flex;
+  transition: all $as $ae;
+  cursor: pointer;
+
+  svg path {
+    transition: all $as $ae;
+  }
+
+  &_prev {
+    transform: rotate(-180deg);
+  }
+
+  &:hover {
+    border: 1px solid $white;
+  }
+
+  &:hover svg path {
+    stroke: $white;
+  }
+}
+
+.slider__btnWr {
+  margin-top: 2.5rem;
+}
+
+@include media('mm') {
+  .navigations {
+    display: none;
+  }
+}

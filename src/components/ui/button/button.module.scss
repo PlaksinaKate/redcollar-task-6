@@ -1,0 +1,25 @@
+@import '../../../styles/vars.scss';
+@import '../../../styles/mixins.scss';
+
+.button {
+  padding: .625rem 1.25rem;
+  font-size: 2rem;
+  line-height: 1;
+  border-radius: 1.25rem;
+  border: 1px solid $purple;
+  color: $purple;
+  transition: all $as $ae;
+  background-color: transparent;
+  cursor: pointer;
+
+  &:hover {
+    color: $white;
+    border: 1px solid $white;
+  }
+}
+
+@include media('mm') {
+  .button {
+    font-size: 1.2rem;
+  }
+}
