@@ -35,10 +35,6 @@
 }
 
 @include media('mm') {
-  .slide {
-    width: 100%;
-  }
-
   .slide__img {
     height: 200px;
     width: 70%;
