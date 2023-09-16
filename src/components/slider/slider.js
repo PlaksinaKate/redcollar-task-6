@@ -2,8 +2,14 @@ import styles from './slider.module.scss'
 import { useRef, useState } from 'react'
 import Button from '../ui/button/button';
 import Arrow from '../ui/arrow/arrow';
+import { useStore } from 'effector-react';
+import { dataModel } from '../../effector';
 
-export function Slider({ children, slidersLenght }) {
+
+export function Slider({ children }) {
+  const catsData = useStore(dataModel.$catsData)
+  const catsDataLenght = catsData.length
+
   const [slideActive, setSlideActive] = useState(0)
   const [isAutoPlay, setIsAutoPlay] = useState(false)
   const [transformMove, setTransformMove] = useState(0)
@@ -15,11 +21,11 @@ export function Slider({ children, slidersLenght }) {
   transform.current = slideActive * slideWidth.current?.offsetWidth
 
   const prevSlide = () => {
-    setSlideActive((slideActive - 1 + slidersLenght) % slidersLenght)
+    setSlideActive((slideActive - 1 + catsDataLenght) % catsDataLenght)
   }
 
   const nextSlide = () => {
-    setSlideActive((slideActive + 1) % slidersLenght)
+    setSlideActive((slideActive + 1) % catsDataLenght)
   }
 
 
@@ -29,7 +35,7 @@ export function Slider({ children, slidersLenght }) {
       clearInterval(idInterval.current)
     } else {
       idInterval.current = setInterval(() => {
-        setSlideActive((slideActive) => (slideActive + 1) % slidersLenght)
+        setSlideActive((slideActive) => (slideActive + 1) % catsDataLenght)
       }, 2000)
       setIsAutoPlay(true)
     }
