@@ -1,6 +1,6 @@
-import styles from './slide.module.scss'
+import styles from './index.module.scss'
 
-export function Slide({ img, index, slideActive }) {
+export function Slide({ img, index }) {
   return (
     <div className={styles.slide}>
       <div className={styles.slide__wr}>

@@ -1,14 +1,21 @@
-import { createStore, createEffect } from "effector";
+import { createStore, createEffect, createEvent, sample } from "effector";
 import { getCats } from "../api";
+
+const fetchCatData = createEvent();
 
 const $catsData = createStore([])
 
-const fetchCatData = createEffect(getCats);
+const fetchCatDataFx = createEffect(getCats);
 
-$catsData.on(
-  fetchCatData.doneData,
-  (state, cats) => cats
-);
+sample({
+  clock: fetchCatData,
+  target: fetchCatDataFx
+})
+
+sample({
+  clock: fetchCatDataFx.doneData,
+  target: $catsData
+})
 
 export const dataModel = {
   $catsData,

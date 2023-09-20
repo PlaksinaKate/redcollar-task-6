@@ -1,13 +1,16 @@
-import styles from './slider.module.scss'
+import styles from './index.module.scss'
 import { useRef, useState } from 'react'
-import Button from '../ui/button/button';
-import Arrow from '../ui/arrow/arrow';
-import { useStore } from 'effector-react';
+import { Button } from '../button/button';
+import { Arrow } from '../arrow/arrow';
+import { useUnit } from 'effector-react';
 import { dataModel } from '../../effector';
+import { Slide } from './slide';
 
 
-export function Slider({ children }) {
-  const catsData = useStore(dataModel.$catsData)
+export function Slider(slides) {
+  const [catsData] = useUnit([
+    dataModel.$catsData
+  ])
   const catsDataLenght = catsData.length
 
   const [slideActive, setSlideActive] = useState(0)
@@ -16,16 +19,16 @@ export function Slider({ children }) {
   const idInterval = useRef(0)
   const clientXStart = useRef(0)
   const slideWidth = useRef(null)
-  const transform = useRef(0)
+  let transform = 0
 
-  transform.current = slideActive * slideWidth.current?.offsetWidth
+  transform = slideActive * slideWidth.current?.offsetWidth
 
   const prevSlide = () => {
-    setSlideActive((slideActive - 1 + catsDataLenght) % catsDataLenght)
+    setSlideActive((slideActive) => (slideActive - 1 + catsDataLenght) % catsDataLenght)
   }
 
   const nextSlide = () => {
-    setSlideActive((slideActive + 1) % catsDataLenght)
+    setSlideActive((slideActive) => (slideActive + 1) % catsDataLenght)
   }
 
 
@@ -47,7 +50,7 @@ export function Slider({ children }) {
 
   const onTouchMoveSlide = (e) => {
     const clientXMove = e.touches[0].clientX - clientXStart.current
-    setTransformMove(transform.current + clientXMove / 100)
+    setTransformMove(transform + clientXMove / 100)
   }
 
   const onTouchEndSlide = (e) => {
@@ -60,6 +63,7 @@ export function Slider({ children }) {
     }
   }
 
+  const slidesInfo = slides.slides.map((item, index) => <Slide key={item.id} img={item.url} index={index} />)
 
   return (
     <div className={styles.wr}>
@@ -73,9 +77,9 @@ export function Slider({ children }) {
         >
           <div
             className={styles.slider__track}
-            style={{ transform: `translate3d(-${transformMove !== 0 ? transformMove : transform.current}px, 0px, 0px)` }}
+            style={{ transform: `translate3d(-${transformMove !== 0 ? transformMove : transform}px, 0px, 0px)` }}
           >
-            {children}
+            {slidesInfo}
           </div>
         </div>
         <div className={styles.navigations}>

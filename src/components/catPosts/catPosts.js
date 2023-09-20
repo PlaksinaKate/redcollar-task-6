@@ -1,4 +1,3 @@
-import { Slide } from '../slide/slide'
 import { useEffect } from 'react'
 import { Slider } from '../slider/slider'
 import { useUnit } from 'effector-react';
@@ -14,11 +13,7 @@ export function CatPosts() {
     fetchCatData()
   }, [])
 
-  const slides = catsData.map((item, index) => <Slide key={item.id} img={item.url} index={index} />)
-
   return (
-    <Slider>
-      {slides}
-    </Slider>
+    <Slider slides={catsData} />
   )
 }
